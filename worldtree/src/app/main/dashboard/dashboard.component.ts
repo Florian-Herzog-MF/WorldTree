@@ -7,7 +7,6 @@ import {
   WorldObjectService,
 } from '../world-object.service';
 import {
-  BehaviorSubject,
   lastValueFrom,
   map,
   ReplaySubject,
