@@ -19,8 +19,6 @@ class EmbeddingClient:
         }
     
     def embedd_query(self, query):
-
-        # Make HTTP Rest POST request
         response = requests.post(self._api_endpoint, headers=self._headers, data=json.dumps({ "input": query }))
 
         if not response.status_code == 200:
@@ -28,3 +26,6 @@ class EmbeddingClient:
             return ""
             
         return response.json().get("data")[0].get("embedding")
+    
+    def find_emb_dim(self):
+        return len(self.embedd_query("How long are your embeddings?"))
