@@ -1,0 +1,6 @@
+obj/
+bin/
+log/
+
+// non-basic configuration files
+appsettings.*.json

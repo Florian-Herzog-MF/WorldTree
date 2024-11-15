@@ -1,0 +1,11 @@
+<section>
+  <span *ngIf="header; else noHeader" class="header-row">
+    <mat-divider></mat-divider>
+    <h3>{{ header }}</h3>
+    <mat-divider></mat-divider>
+  </span>
+  <ng-content></ng-content>
+</section>
+<ng-template #noHeader>
+  <mat-divider></mat-divider>
+</ng-template>

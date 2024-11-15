@@ -1,0 +1,15 @@
+<app-vertical-page url="/dashboard">
+  <div page>
+    <mat-form-field>
+      <input matInput placeholder="Search" [formControl]="search" />
+      <button
+        mat-icon-button
+        matSuffix
+        [disabled]="!search.value"
+        (click)="doSearch()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</app-vertical-page>

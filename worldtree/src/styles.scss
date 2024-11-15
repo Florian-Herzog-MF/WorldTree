@@ -1,0 +1,155 @@
+/* You can add global styles to this file, and also import other style files */
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "assets/theme/theme" as *;
+
+app-root {
+  @include mat.core();
+  @include mat.all-component-themes($dark);
+  @include mat.typography-hierarchy(mat.define-typography-config());
+
+  $config: mat.get-color-config($dark);
+
+  @function color($group, $variant) {
+    @return mat.get-color-from-palette(map.get($config, $group), $variant);
+  }
+
+  $header-color: color("primary", A100);
+
+  app-vertical-page [page] {
+    h1,
+    h3 {
+      color: $header-color;
+      opacity: 0.5;
+    }
+  }
+}
+
+button[mat-icon-button] {
+  background-color: transparent;
+  border: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end !important;
+}
+
+mat-icon.large-icon {
+  font-size: 100px !important;
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.h-align {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 0;
+  gap: 16px;
+}
+
+.v-align {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0;
+  gap: 16px;
+}
+
+.h-spread {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  gap: 16px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.hoverable {
+  .reveal-on-hover {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  &:hover {
+    .reveal-on-hover {
+      opacity: 1;
+    }
+  }
+}
+
+.single-line {
+  text-wrap: nowrap;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+button.delete {
+  &:hover {
+    color: red !important;
+
+    &[mat-stroked-button] {
+      border-color: red !important;
+    }
+  }
+}
+
+mat-form-field:has(input[readonly], textarea[readonly]) {
+  .mat-mdc-floating-label {
+    transform: translateY(-106%) scale(0.75);
+  }
+  .mat-mdc-text-field-wrapper {
+    background-color: transparent;
+  }
+  .mat-mdc-form-field-focus-overlay,
+  .mdc-line-ripple {
+    display: none;
+  }
+}
+
+mat-form-field:has(.custom-autocomplete.float-label) {
+  .mat-mdc-floating-label {
+    transform: translateY(-106%) scale(0.75);
+  }
+}
+
+app-vertical-page [page] {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 16px;
+  padding: 16px;
+
+  h1 {
+    font-size: x-large;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: large;
+  }
+}
