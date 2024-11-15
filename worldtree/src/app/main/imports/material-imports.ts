@@ -29,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 export const MaterialImports = [
   MatIconModule,
@@ -62,4 +63,5 @@ export const MaterialImports = [
   MatTooltipModule,
   MatSidenavModule,
   MatRippleModule,
+  MatPaginatorModule,
 ];

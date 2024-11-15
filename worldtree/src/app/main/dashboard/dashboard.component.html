@@ -11,5 +11,27 @@
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let type of types"
+        (opened)="selectedType$.next(type.value)"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ type.label }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ type.description }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-paginator (page)="pageChanged($event)">
+          <mat-list>
+            <mat-list-item *ngFor="let item of worldObjects$ | async">
+              {{ item.name }}
+            </mat-list-item>
+          </mat-list>
+        </mat-paginator>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </app-vertical-page>
