@@ -46,6 +46,8 @@ export class DashboardComponent implements OnInit {
     )
   );
 
+  readonly limit$ = this.currentData$.pipe(map((data) => data.limit));
+
   readonly worldObjects$ = new Subject<WorldObject[]>();
 
   constructor(private readonly woService: WorldObjectService) {}

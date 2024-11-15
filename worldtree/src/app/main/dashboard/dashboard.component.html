@@ -24,7 +24,7 @@
             {{ type.description }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <mat-paginator (page)="pageChanged($event)">
+        <mat-paginator [length]="limit$ | async" (page)="pageChanged($event)">
           <mat-list>
             <mat-list-item *ngFor="let item of worldObjects$ | async">
               {{ item.name }}

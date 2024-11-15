@@ -45,6 +45,8 @@ export interface WorldObject {
   type: WorldObjectType;
 }
 
+type Paged<T> = { limit: number; data: T[] };
+
 @Injectable({
   providedIn: 'root',
 })
@@ -52,7 +54,8 @@ export class WorldObjectService {
   constructor(private readonly http: HttpClient) {}
 
   getPaged(type: WorldObjectType, skip: number, amount: number) {
-    return this.http.get<WorldObject>(`api/v1/world-object`, {
+    console.log('Fetching data...', skip, amount);
+    return this.http.get<Paged<WorldObject>>(`api/v1/world-objects`, {
       params: {
         type,
         skip,
