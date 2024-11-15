@@ -9,5 +9,7 @@ import { WorldObjectService } from 'src/app/main/world-object.service';
 export class VerticalPageComponent {
   @Input() header = 'WorldTree';
 
+  @Input() backButton = false;
+
   constructor() {}
 }

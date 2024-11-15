@@ -1,5 +1,12 @@
 <app-vertical-page url="/dashboard">
   <div page>
+    <mat-button-toggle-group [formControl]="type">
+      <mat-button-toggle
+        *ngFor="let option of typeOptions"
+        [value]="option.value"
+        >{{ option.label }}</mat-button-toggle
+      >
+    </mat-button-toggle-group>
     <mat-form-field>
       <input matInput placeholder="Search" [formControl]="search" />
       <button
@@ -11,31 +18,13 @@
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
-    <mat-accordion>
-      <mat-expansion-panel
-        *ngFor="let type of types"
-        (opened)="selectedType$.next(type.value)"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ type.label }}
-          </mat-panel-title>
-          <mat-panel-description>
-            {{ type.description }}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <mat-paginator
-          [pageSize]="10"
-          [length]="limit$ | async"
-          (page)="pageChanged($event)"
-        >
-          <mat-list>
-            <mat-list-item *ngFor="let item of worldObjects$ | async">
-              {{ item.name }}
-            </mat-list-item>
-          </mat-list>
-        </mat-paginator>
-      </mat-expansion-panel>
-    </mat-accordion>
+    <app-world-object-list [items]="items$ | async"></app-world-object-list>
+    <mat-paginator
+      [pageSize]="10"
+      [length]="limit$ | async"
+      (page)="pageChanged($event)"
+    >
+    </mat-paginator>
+    <a mat-fab [routerLink]="['/new-source']"><mat-icon>create</mat-icon></a>
   </div>
 </app-vertical-page>

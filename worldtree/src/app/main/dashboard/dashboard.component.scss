@@ -10,3 +10,18 @@
   padding: 50px;
   border-radius: 50%;
 }
+
+a[mat-fab] {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+mat-button-toggle-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  mat-button-toggle {
+    flex: 1;
+  }
+}

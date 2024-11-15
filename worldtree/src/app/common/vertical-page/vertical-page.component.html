@@ -1,6 +1,10 @@
 <mat-toolbar>
   <div class="container">
-    <span></span>
+    <span>
+      <a *ngIf="backButton" mat-icon-button [routerLink]="['..']">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+    </span>
     <h1>
       {{ header }}
     </h1>

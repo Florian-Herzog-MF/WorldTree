@@ -13,6 +13,9 @@ import { SpinnerComponent } from './common/spinner/spinner.component';
 import { CardPlaceholderComponent } from './common/card-placeholder/card-placeholder.component';
 import { SectionComponent } from './common/section/section.component';
 import { BackdropDirective } from './common/backdrop.directive';
+import { SearchCharactersComponent } from './characters/search-characters/search-characters.component';
+import { NewSourceComponent } from './sources/new-source/new-source.component';
+import { WorldObjectListComponent } from './main/world-object-list/world-object-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { BackdropDirective } from './common/backdrop.directive';
     CardPlaceholderComponent,
     SectionComponent,
     BackdropDirective,
+    SearchCharactersComponent,
+    NewSourceComponent,
+    WorldObjectListComponent,
   ],
   imports: [
     BrowserModule,

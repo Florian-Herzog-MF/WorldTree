@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 
 export enum WorldObjectType {
   Character = 'Character',
@@ -14,29 +13,6 @@ export interface WorldObjectTypeEnhanced {
   label: string;
   description: string;
 }
-
-export const WorldObjectTypesEnhanced: WorldObjectTypeEnhanced[] = [
-  {
-    value: WorldObjectType.Character,
-    label: 'Character',
-    description: 'A person or creature in your world.',
-  },
-  {
-    value: WorldObjectType.Town,
-    label: 'Town',
-    description: 'A settlement in your world.',
-  },
-  {
-    value: WorldObjectType.Building,
-    label: 'Building',
-    description: 'A structure in your world.',
-  },
-  {
-    value: WorldObjectType.Item,
-    label: 'Item',
-    description: 'An object in your world.',
-  },
-];
 
 export interface WorldObject {
   id: string;
@@ -53,14 +29,14 @@ type Paged<T> = { limit: number; data: T[] };
 export class WorldObjectService {
   constructor(private readonly http: HttpClient) {}
 
-  getPaged(type: WorldObjectType, skip: number, amount: number) {
-    console.log('Fetching data...', skip, amount);
+  getPaged(params: {
+    type?: WorldObjectType;
+    amount: number;
+    skip: number;
+    query?: string;
+  }) {
     return this.http.get<Paged<WorldObject>>(`api/v1/world-objects`, {
-      params: {
-        type,
-        skip,
-        amount,
-      },
+      params,
     });
   }
 

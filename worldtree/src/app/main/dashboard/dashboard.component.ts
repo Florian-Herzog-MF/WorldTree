@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { WorldObjectType, WorldObjectService } from '../world-object.service';
 import {
-  WorldObject,
-  WorldObjectType,
-  WorldObjectTypesEnhanced,
-  WorldObjectService,
-} from '../world-object.service';
-import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
   lastValueFrom,
   map,
-  ReplaySubject,
+  shareReplay,
   startWith,
-  Subject,
   switchMap,
 } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
@@ -23,46 +20,63 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class DashboardComponent implements OnInit {
   search = new FormControl('');
-
-  readonly types = WorldObjectTypesEnhanced;
-
-  readonly selectedType$ = new ReplaySubject<WorldObjectType>(1);
-  readonly page$ = new Subject<PageEvent>();
-
-  readonly currentData$ = this.selectedType$.pipe(
-    switchMap((type) =>
-      this.page$.pipe(
-        startWith({ pageIndex: 0, pageSize: 10 }),
-        map((page) => ({
-          type,
-          skip: page.pageIndex * page.pageSize,
-          amount: page.pageSize,
-        }))
-      )
-    ),
-    switchMap(({ type, skip, amount }) =>
-      this.woService.getPaged(type, skip, amount)
-    )
+  query$ = this.search.valueChanges.pipe(
+    startWith(''),
+    map((x) => x ?? '')
   );
 
-  readonly limit$ = this.currentData$.pipe(map((data) => data.limit));
+  typeOptions = [
+    { value: null, label: 'All' },
+    { value: WorldObjectType.Character, label: 'Characters' },
+    { value: WorldObjectType.Town, label: 'Towns' },
+    { value: WorldObjectType.Building, label: 'Buildings' },
+    { value: WorldObjectType.Item, label: 'Items' },
+  ];
 
-  readonly worldObjects$ = new Subject<WorldObject[]>();
+  type = new FormControl<WorldObjectType | null>(null);
+  type$ = this.type.valueChanges.pipe(startWith(this.type.value));
 
-  constructor(private readonly woService: WorldObjectService) {}
+  pageSize$ = new BehaviorSubject<number>(10);
+  pageIndex$ = new BehaviorSubject<number>(0);
 
-  ngOnInit() {
-    this.currentData$.subscribe((data) => console.log(data));
-  }
+  readonly fetchParams$ = new BehaviorSubject<{
+    skip: number;
+    amount: number;
+  }>({ skip: 0, amount: 10 });
+
+  data$ = combineLatest([this.query$, this.pageSize$, this.pageIndex$]).pipe(
+    debounceTime(300),
+    switchMap(([query, pageSize, pageIndex]) =>
+      this.service.getPaged({
+        type: WorldObjectType.Character,
+        amount: pageSize,
+        skip: pageIndex * pageSize,
+        query,
+      })
+    ),
+    shareReplay(1)
+  );
+
+  readonly limit$ = this.data$.pipe(map((data) => data.limit));
+
+  readonly items$ = this.data$.pipe(map((data) => data.data));
+
+  constructor(private readonly service: WorldObjectService) {}
+
+  ngOnInit() {}
 
   async doSearch() {
     console.log(this.search.value);
     var result = await lastValueFrom(
-      this.woService.search(this.search.value ?? '')
+      this.service.search(this.search.value ?? '')
     );
   }
 
   pageChanged(event: PageEvent) {
-    console.log(event);
+    this.fetchParams$.next({
+      ...this.fetchParams$.value,
+      skip: event.pageIndex * event.pageSize,
+      amount: event.pageSize,
+    });
   }
 }
