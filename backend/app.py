@@ -1,4 +1,7 @@
+import os
 from flask import Flask, jsonify, request
+
+from src.llm_client import LLMClient
 
 app = Flask(__name__)
 
@@ -24,4 +27,4 @@ def post_data():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
