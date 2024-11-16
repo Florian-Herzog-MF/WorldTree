@@ -98,7 +98,7 @@ def generate_world_objects():
     return jsonify(world_objects)
 
 
-@app.route('/api/v1/world-objects/persist', methods=['POST'])
+@app.route('/api/v1/world-object/persist', methods=['POST'])
 def persist_world_object():
     world_object = request.json.get("world_object")
     if not world_object:
