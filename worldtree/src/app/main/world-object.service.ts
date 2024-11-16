@@ -79,10 +79,20 @@ export class WorldObjectService {
     );
   }
 
-  search(prompt: string) {
-    alert(prompt);
-    return this.http.get<WorldObject[]>(
-      `api/v1/world-object/search?prompt=${prompt}&amount=10`
+  search(prompt: string, amount: number) {
+    return lastValueFrom(
+      this.http.get<WorldObject[]>(`api/v1/world-object/search`, {
+        params: { prompt, amount },
+      })
+    );
+  }
+
+  generate(prompt: string, existingItems: WorldObject[]) {
+    return lastValueFrom(
+      this.http.post<WorldObject[]>(`api/v1/world-object`, {
+        prompt,
+        existingItems,
+      })
     );
   }
 }

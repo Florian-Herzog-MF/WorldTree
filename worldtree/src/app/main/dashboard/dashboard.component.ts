@@ -101,8 +101,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {}
 
   async doSearch() {
-    var result = await lastValueFrom(
-      this.worldObjectService.search(this.search.value ?? '')
+    var result = await this.worldObjectService.search(
+      this.search.value ?? '',
+      10
     );
   }
 
