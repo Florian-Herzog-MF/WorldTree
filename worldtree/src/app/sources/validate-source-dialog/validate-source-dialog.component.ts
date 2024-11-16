@@ -29,7 +29,9 @@ export class ValidateSourceDialogComponent {
     public readonly dialogRef: MatDialogRef<ValidateSourceDialogComponent>,
     private readonly sourceService: SourceService,
     private readonly worldObjectService: WorldObjectService
-  ) {}
+  ) {
+    console.log(data)
+  }
 
   attributeItems(item: WorldObject): { key: string; value: string }[] {
     return Object.entries(item.attributes).map(([key, value]) => ({

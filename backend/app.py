@@ -37,7 +37,7 @@ def search_world_objects():
     world_objects = wm.world_object_search(prompt, obj_type, amount)
     if world_objects is None:
         return jsonify({"error": "Could not search world objects."}), 500
-
+    
     return jsonify(world_objects)
 
 
@@ -90,11 +90,12 @@ def generate_world_objects():
     if not isinstance(wo_ids, list):
         return jsonify({"error": "'wo_ids' must be a list of IDs"}), 400
 
-    world_objects = wm.generate_world_object_source(source, wo_ids)
+    world_objects = wm.generate_world_objects_from_source(source, wo_ids)
     
     if world_objects is None:
         return jsonify({"error": "Could not generate world objects"}), 500
 
+    print(world_objects)
     return jsonify(world_objects)
 
 
