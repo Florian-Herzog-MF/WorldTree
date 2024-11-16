@@ -42,7 +42,7 @@ export class GenerateSourceComponent {
     console.log(newItems);
 
     this.matDialog.open(ValidateSourceDialogComponent, {
-      data: { source: sourceText, existingItems, newItems },
+      data: { sourceText, existingItems, newItems },
     });
   }
 }
