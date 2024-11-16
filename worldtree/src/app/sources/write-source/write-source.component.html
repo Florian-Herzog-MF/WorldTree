@@ -6,10 +6,16 @@
   ></textarea>
 </mat-form-field>
 
+<span
+  *ngIf="isLoading"
+  style="width: 100%; display: flex; justify-content: center"
+>
+  <mat-spinner></mat-spinner>
+</span>
 <button
   mat-raised-button
   color="accent"
-  [disabled]="(text.value?.length ?? 0) < 50"
+  [disabled]="isLoading || (text.value?.length ?? 0) < 50"
   (click)="evaluate()"
 >
   <mat-icon>insights</mat-icon>
