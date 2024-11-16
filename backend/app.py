@@ -81,7 +81,7 @@ def generate_world_objects():
     if not data:
         return jsonify({"error": "Request body must be JSON"}), 400
     
-    source = data.get("source_text")
+    source = data.get("source")
     wo_ids = data.get("wo_ids")
 
     if not source or not isinstance(source, str):
