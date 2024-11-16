@@ -29,6 +29,10 @@ class VectorDBClient:
     def collection_name(self):
         return self._collection_name
     
+    @property
+    def qdrant_client(self):
+        return self._qdrant_client
+    
     def _get_next_id(self):
         points = self._qdrant_client.scroll(
             collection_name=self._collection_name,
@@ -36,16 +40,14 @@ class VectorDBClient:
             with_payload=True)[0]
         if points:
             max_id = max(point.id for point in points)
-            print(f"Next Point: {max_id + 1}")
             return max_id + 1
-        print("Next Point Id: 1")
         return 1
     
     def scroll(self, skip: int=0, amount=5, type: EntryType=None):
         #TODO: Add type filtering
         self._qdrant_client.scroll(self._collection_name, offset=skip, limit=amount)
 
-    def add_point(self, query: str, payload: dict):
+    def add_point(self, query: str, payload: dict) -> int:
         emb_vec = self._emb_client.embedd_query(query)
         idx = self._get_next_id()
         self._qdrant_client.upsert(
@@ -58,6 +60,7 @@ class VectorDBClient:
                 )
             ]
         )
+        return idx
     
     def query_search(self, query: str, return_limit: int=3):
         emb_vec = self._emb_client.embedd_query(query)

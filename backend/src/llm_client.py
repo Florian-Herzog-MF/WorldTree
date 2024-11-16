@@ -18,16 +18,17 @@ class LLMClient:
             "Content-Type": "application/json"
         }
     
-    def generate_response(self, user_query, system_query):
-        new_message = [{
-        "role": "user",
-        "content": [
+    def generate_response(self, user_query: str, system_query: str):
+        """response_type: text, json_object"""
+        new_message = [
             {
-                "type": "text",
-                "text": user_query
-            }
-        ]
-        }]
+                "role": "system",
+                "content": system_query
+            },
+            {
+                "role": "user",
+                "content": user_query
+            }]
 
         # Make HTTP Rest POST request
         response = requests.post(self._api_endpoint, headers=self._headers, data=json.dumps({ "messages": new_message }))
