@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Validate New Source</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input matInput required [formControl]="summary" />
+    <input matInput required [formControl]="desc" />
     <mat-hint>A short sentence that describes this source</mat-hint>
   </mat-form-field>
   <p>{{ data.sourceText }}</p>
@@ -40,7 +40,7 @@
   <button
     mat-raised-button
     color="accent"
-    [disabled]="summary.invalid"
+    [disabled]="desc.invalid"
     (click)="accept()"
   >
     Accept
