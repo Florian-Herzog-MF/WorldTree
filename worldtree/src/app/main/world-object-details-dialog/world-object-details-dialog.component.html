@@ -11,9 +11,9 @@
   <mat-accordion>
     <mat-expansion-panel *ngFor="let source of sources">
       <mat-expansion-panel-header>
-        {{ source.summary }}
+        {{ source.desc }}
       </mat-expansion-panel-header>
-      <p>{{ source.content }}</p>
+      <p>{{ source.text }}</p>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

@@ -20,9 +20,9 @@
     <mat-accordion [class.hidden]="hideSources$ | async">
       <mat-expansion-panel #panel *ngFor="let item of sources$ | async">
         <mat-expansion-panel-header>
-          {{ item.summary }}
+          {{ item.desc }}
         </mat-expansion-panel-header>
-        <p>{{ item.content }}</p>
+        <p>{{ item.text }}</p>
         <app-world-object-list
           *ngIf="panel.expanded"
           [items]="itemsForSource(item.id) | async"

@@ -4,8 +4,8 @@ import { lastValueFrom, map, of, ReplaySubject, tap } from 'rxjs';
 
 export interface Source {
   id: number;
-  summary: string;
-  content: string;
+  desc: string;
+  text: string;
 }
 
 @Injectable({
@@ -31,9 +31,7 @@ export class SourceService {
     return this.sources$.pipe(
       map((sources) =>
         sources.filter((x) =>
-          x.content
-            .toLocaleLowerCase()
-            .includes(params.query.toLocaleLowerCase())
+          x.text.toLocaleLowerCase().includes(params.query.toLocaleLowerCase())
         )
       )
     );
@@ -45,11 +43,11 @@ export class SourceService {
     );
   }
 
-  public persist(source: string, summary: string) {
+  public persist(text: string, summary: string) {
     return lastValueFrom(
       this.http.post<number>(
         'api/v1/source/persist',
-        { source },
+        { text },
         {
           params: { summary },
         }
