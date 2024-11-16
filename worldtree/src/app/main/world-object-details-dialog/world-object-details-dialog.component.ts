@@ -11,7 +11,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class WorldObjectDetailsDialogComponent implements OnInit {
   attributeItems: { key: string; value: string }[] = Object.entries(
-    this.data.attributes
+    this.data.attributes ?? {}
   ).map(([key, value]) => ({ key, value }));
 
   sources: Source[] = [];
