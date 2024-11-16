@@ -47,9 +47,13 @@ export class SourceService {
 
   public persist(source: string, summary: string) {
     return lastValueFrom(
-      this.http.post<number>('api/v1/source/persist', source, {
-        params: { summary },
-      })
+      this.http.post<number>(
+        'api/v1/source/persist',
+        { source },
+        {
+          params: { summary },
+        }
+      )
     );
   }
 }
