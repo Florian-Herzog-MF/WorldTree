@@ -13,7 +13,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./validate-source-dialog.component.scss'],
 })
 export class ValidateSourceDialogComponent {
-  summary = new FormControl('', [
+  desc = new FormControl('', [
     Validators.minLength(10),
     Validators.maxLength(50),
     Validators.required,
@@ -30,7 +30,7 @@ export class ValidateSourceDialogComponent {
     private readonly sourceService: SourceService,
     private readonly worldObjectService: WorldObjectService
   ) {
-    console.log(data)
+    console.log(data);
   }
 
   attributeItems(item: WorldObject): { key: string; value: string }[] {
@@ -45,14 +45,14 @@ export class ValidateSourceDialogComponent {
   }
 
   async accept() {
-    if (!this.summary.value) {
+    if (!this.desc.value) {
       alert('no summary');
       return;
     }
 
     const sourceId = await this.sourceService.persist(
       this.data.sourceText,
-      this.summary.value
+      this.desc.value
     );
     for (const item of this.data.newItems) {
       await this.worldObjectService.persist(item, sourceId);
