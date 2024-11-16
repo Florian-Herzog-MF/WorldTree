@@ -34,7 +34,7 @@ export class ValidateSourceDialogComponent {
   }
 
   attributeItems(item: WorldObject): { key: string; value: string }[] {
-    return Object.entries(item.attributes).map(([key, value]) => ({
+    return Object.entries(item.attributes ?? {}).map(([key, value]) => ({
       key,
       value,
     }));

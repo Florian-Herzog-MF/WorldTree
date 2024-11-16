@@ -17,10 +17,10 @@ export interface WorldObjectTypeEnhanced {
 
 export interface WorldObject {
   id: string;
-  type: WorldObjectType;
+  type?: WorldObjectType;
   name: string;
   desc: string;
-  attributes: { [key: string]: string };
+  attributes?: { [key: string]: string };
   source_ids: number[];
 }
 

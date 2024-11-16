@@ -21,8 +21,8 @@ export class WorldObjectListComponent {
   constructor(private readonly matDialog: MatDialog) {}
 
   attributesTooltip(item: WorldObject) {
-    return Object.keys(item.attributes)
-      .map((key) => `${key}: ${item.attributes[key]}`)
+    return Object.keys(item.attributes ?? {})
+      .map((key) => `${key}: ${item.attributes![key]}`)
       .join('\n');
   }
 
