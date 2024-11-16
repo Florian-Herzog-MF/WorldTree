@@ -23,7 +23,7 @@ export class WorldObjectDetailsDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.data.sourceIds.forEach(async (id) => {
+    this.data.source_ids.forEach(async (id) => {
       this.sources.push(await lastValueFrom(this.sourceService.get(id)));
     });
   }

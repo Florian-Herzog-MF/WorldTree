@@ -19,9 +19,9 @@ export interface WorldObject {
   id: string;
   type: WorldObjectType;
   name: string;
-  description: string;
+  desc: string;
   attributes: { [key: string]: string };
-  sourceIds: number[];
+  source_ids: number[];
 }
 
 type Paged<T> = { limit: number; data: T[] };
@@ -72,7 +72,7 @@ export class WorldObjectService {
           )
           .filter(
             (x) =>
-              params.sourceId == null || x.sourceIds.includes(params.sourceId)
+              params.sourceId == null || x.source_ids.includes(params.sourceId)
           )
           .slice(params.skip, params.skip + params.amount)
       )
