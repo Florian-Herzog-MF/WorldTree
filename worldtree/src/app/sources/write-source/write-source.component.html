@@ -1,0 +1,17 @@
+<mat-form-field>
+  <textarea
+    matInput
+    placeholder="Your text goes here..."
+    [formControl]="text"
+  ></textarea>
+</mat-form-field>
+
+<button
+  mat-raised-button
+  color="accent"
+  [disabled]="(text.value?.length ?? 0) < 50"
+  (click)="evaluate()"
+>
+  <mat-icon>insights</mat-icon>
+  Evaluate
+</button>

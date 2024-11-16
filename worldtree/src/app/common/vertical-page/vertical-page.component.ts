@@ -10,6 +10,7 @@ export class VerticalPageComponent {
   @Input() header = 'WorldTree';
 
   @Input() backButton = false;
+  @Input() createButton = false;
 
   constructor() {}
 }

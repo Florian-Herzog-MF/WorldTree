@@ -1,0 +1,12 @@
+{
+  "id": 0,
+  "type": "Building",
+  "name": "Amber Temple",
+  "description": "Prison of the Dark Powers",
+  "sourceIds": [2, 3],
+  "attributes": {
+    "Location": "Mount Ghakis",
+    "Owner": "Dark Powers",
+    "Purpose": "Prison of Dark Powers"
+  }
+}

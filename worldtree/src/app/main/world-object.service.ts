@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom, map, of, ReplaySubject } from 'rxjs';
 
 export enum WorldObjectType {
   Character = 'Character',
@@ -16,9 +17,11 @@ export interface WorldObjectTypeEnhanced {
 
 export interface WorldObject {
   id: string;
-  name: string;
-  sourceIds: string[];
   type: WorldObjectType;
+  name: string;
+  description: string;
+  attributes: { [key: string]: string };
+  sourceIds: number[];
 }
 
 type Paged<T> = { limit: number; data: T[] };
@@ -27,20 +30,57 @@ type Paged<T> = { limit: number; data: T[] };
   providedIn: 'root',
 })
 export class WorldObjectService {
-  constructor(private readonly http: HttpClient) {}
+  items: WorldObject[] = [];
+  items$ = new ReplaySubject<WorldObject[]>(1);
+
+  constructor(private readonly http: HttpClient) {
+    [4, 5, 7, 8, 9].forEach(async (id) => {
+      const item = await lastValueFrom(this.get(id));
+      this.items.push(item);
+      this.items$.next(this.items);
+    });
+  }
+
+  get(id: number) {
+    return this.http.get<WorldObject>(`assets/objects/${id}.json`);
+  }
+
+  amount(params: {
+    type?: WorldObjectType;
+    amount: number;
+    skip: number;
+    query?: string;
+  }) {
+    return this.getPaged(params).pipe(map((x) => x.length));
+  }
 
   getPaged(params: {
     type?: WorldObjectType;
     amount: number;
     skip: number;
     query?: string;
+    sourceId?: number;
   }) {
-    return this.http.get<Paged<WorldObject>>(`api/v1/world-objects`, {
-      params,
-    });
+    return this.items$.pipe(
+      map((items) =>
+        items
+          .filter((x) => params.type == null || x.type === params.type)
+          .filter(
+            (x) =>
+              params.query == null ||
+              x.name.toLowerCase().includes(params.query.toLowerCase())
+          )
+          .filter(
+            (x) =>
+              params.sourceId == null || x.sourceIds.includes(params.sourceId)
+          )
+          .slice(params.skip, params.skip + params.amount)
+      )
+    );
   }
 
   search(prompt: string) {
+    alert(prompt);
     return this.http.get<WorldObject[]>(
       `api/v1/world-object/search?prompt=${prompt}&amount=10`
     );

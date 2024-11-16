@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
-import { SearchCharactersComponent } from './characters/search-characters/search-characters.component';
 import { NewSourceComponent } from './sources/new-source/new-source.component';
+import { GenerateSourceComponent } from './sources/generate-source/generate-source.component';
 
 const routes: Routes = [
   {
-    path: 'new-source',
+    path: 'create',
     component: NewSourceComponent,
-  },
-  {
-    path: 'characters',
-    component: SearchCharactersComponent,
   },
   {
     path: '',

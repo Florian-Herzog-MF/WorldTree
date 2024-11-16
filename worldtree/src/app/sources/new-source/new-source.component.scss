@@ -1,3 +1,15 @@
 :host {
   display: contents;
 }
+
+textarea {
+  height: 300px !important;
+  resize: none;
+}
+
+mat-button-toggle-group {
+  justify-content: space-between;
+  mat-button-toggle {
+    flex: 1;
+  }
+}

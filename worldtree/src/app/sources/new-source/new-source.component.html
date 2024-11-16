@@ -1,69 +1,15 @@
-<app-vertical-page [backButton]="true" header="Add Content">
+<app-vertical-page
+  [backButton]="true"
+  [header]="mode.value === 'write' ? 'Add Source' : 'Generate Source'"
+>
   <div page>
-    <mat-form-field>
-      <textarea
-        matInput
-        placeholder="Your text goes here..."
-        [formControl]="content"
-      ></textarea>
-    </mat-form-field>
-
-    <ng-container *ngIf="this.associableItems !== null">
-      <button mat-button [disabled]="!canEvaluate" (click)="evaluate()">
-        <mat-icon>insights</mat-icon>
-        Re-Evaluate
-      </button>
-      <h3 *ngIf="associableItems.length">Select World Objects to associate:</h3>
-      <mat-selection-list [formControl]="connectedItems">
-        <mat-list-option *ngFor="let item of associableItems" [value]="item">
-          {{ item }}
-        </mat-list-option>
-      </mat-selection-list>
-      not found what you're looking for?
-      <mat-form-field>
-        <input matInput placeholder="Search" [formControl]="search" />
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-      <mat-selection-list [formControl]="connectedItems">
-        <mat-list-option
-          *ngFor="let item of queriedItems$ | async"
-          [value]="item"
-          (selectedChange)="selectedChange($event, item)"
-        >
-          {{ item }}
-        </mat-list-option>
-      </mat-selection-list>
-      <button
-        *ngIf="connectedItems.value === null"
-        mat-button
-        (click)="connectedItems.setValue([])"
-      >
-        Nothing to associate
-      </button>
-      <button
-        mat-raised-button
-        color="accent"
-        [disabled]="connectedItems.value === null"
-        (click)="complete()"
-      >
-        Complete
-      </button>
-    </ng-container>
-    <ng-container
-      *ngIf="this.associableItems === null && !this.content.value?.length"
-    >
-      <button mat-button (click)="generate()">
-        <mat-icon>auto_awesome</mat-icon>
-        Generate
-      </button>
-    </ng-container>
-    <ng-container
-      *ngIf="this.associableItems === null && this.content.value?.length"
-    >
-      <button mat-button [disabled]="!canEvaluate" (click)="evaluate()">
-        <mat-icon>insights</mat-icon>
-        Evaluate
-      </button>
-    </ng-container>
+    <mat-button-toggle-group [formControl]="mode">
+      <mat-button-toggle value="write">Write</mat-button-toggle>
+      <mat-button-toggle value="generate">Generate</mat-button-toggle>
+    </mat-button-toggle-group>
+    <app-generate-source
+      *ngIf="mode.value === 'generate'"
+    ></app-generate-source>
+    <app-write-source *ngIf="mode.value === 'write'"></app-write-source>
   </div>
 </app-vertical-page>

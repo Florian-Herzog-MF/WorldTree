@@ -1,0 +1,17 @@
+<mat-form-field>
+  <textarea
+    matInput
+    placeholder="Your prompt goes here..."
+    [formControl]="prompt"
+  ></textarea>
+</mat-form-field>
+
+<button
+  mat-raised-button
+  color="accent"
+  [disabled]="(prompt.value?.length ?? 0) < 10"
+  (click)="generate()"
+>
+  <mat-icon>auto_awesome</mat-icon>
+  Generate
+</button>

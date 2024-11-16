@@ -1,0 +1,13 @@
+{
+  "id": 0,
+  "type": "Character",
+  "name": "Exathanter",
+  "description": "Ancient Lich",
+  "sourceIds": [2],
+  "attributes": {
+    "Nature": "Ancient Lich",
+    "Residence": "Amber Temple",
+    "Mental State": "Madness",
+    "Purpose": "Guardian of the Amber Temple"
+  }
+}

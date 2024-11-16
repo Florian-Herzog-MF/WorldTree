@@ -1,0 +1,12 @@
+{
+  "id": 0,
+  "type": "Building",
+  "name": "Castle Ravenloft",
+  "description": "Vampire Lord's Castle",
+  "sourceIds": [1],
+  "attributes": {
+    "Location": "Barovia",
+    "Owner": "Strahd von Zarovich",
+    "Purpose": "Residence"
+  }
+}

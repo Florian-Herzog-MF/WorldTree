@@ -1,0 +1,15 @@
+{
+  "id": 7,
+  "type": "Town",
+  "name": "Vallaki",
+  "description": "Medium-sized town in Barovia",
+  "sourceIds": [6],
+  "attributes": {
+    "Population": "2000",
+    "Ruler": "Burgomaster Vargas Vallakovich",
+    "Economy": "Agriculture",
+    "Defenses": "Walls, guards",
+    "Religion": "Morninglord",
+    "Notable Features": "Blue Water Inn, St. Andral's Church, Vallakovich Mansion"
+  }
+}

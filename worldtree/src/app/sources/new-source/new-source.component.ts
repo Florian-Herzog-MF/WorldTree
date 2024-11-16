@@ -13,6 +13,7 @@ import {
   styleUrls: ['./new-source.component.scss'],
 })
 export class NewSourceComponent implements OnInit {
+  mode = new FormControl<'write' | 'generate'>('write');
   content = new FormControl('');
   search = new FormControl('');
 
@@ -24,8 +25,7 @@ export class NewSourceComponent implements OnInit {
     map((query) => query ?? ''),
     switchMap((query) =>
       this.worldObjectService.getPaged({ query, skip: 0, amount: 10 })
-    ),
-    map((result) => result.data)
+    )
   );
 
   connectedItems = new FormControl<WorldObject[] | null>(null);
@@ -49,10 +49,9 @@ export class NewSourceComponent implements OnInit {
 
   async evaluate() {
     this.canEvaluate = false;
-    const items = await lastValueFrom(
-      this.worldObjectService.getPaged({ skip: 0, amount: 10 })
-    );
-    this.associableItems = items.data;
+    // this.associableItems = await lastValueFrom(
+    //   this.worldObjectService.getPaged({ skip: 0, amount: 10 })
+    // );
   }
 
   selectedChange(selected: boolean, item: WorldObject) {

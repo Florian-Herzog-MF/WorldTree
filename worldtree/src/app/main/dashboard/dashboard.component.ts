@@ -5,13 +5,16 @@ import {
   BehaviorSubject,
   combineLatest,
   debounceTime,
+  filter,
   lastValueFrom,
   map,
   shareReplay,
   startWith,
   switchMap,
+  tap,
 } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { SourceService } from 'src/app/sources/source.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,10 +34,14 @@ export class DashboardComponent implements OnInit {
     { value: WorldObjectType.Town, label: 'Towns' },
     { value: WorldObjectType.Building, label: 'Buildings' },
     { value: WorldObjectType.Item, label: 'Items' },
+    { value: 'source', label: 'Sources' },
   ];
 
-  type = new FormControl<WorldObjectType | null>(null);
-  type$ = this.type.valueChanges.pipe(startWith(this.type.value));
+  type = new FormControl<WorldObjectType | 'source' | null>(null);
+  type$ = this.type.valueChanges.pipe(
+    startWith(this.type.value),
+    map((x) => x ?? undefined)
+  );
 
   pageSize$ = new BehaviorSubject<number>(10);
   pageIndex$ = new BehaviorSubject<number>(0);
@@ -44,31 +51,58 @@ export class DashboardComponent implements OnInit {
     amount: number;
   }>({ skip: 0, amount: 10 });
 
-  data$ = combineLatest([this.query$, this.pageSize$, this.pageIndex$]).pipe(
+  params$ = combineLatest([
+    this.type$,
+    this.query$,
+    this.pageSize$,
+    this.pageIndex$,
+  ]).pipe(
+    map(([type, query, pageSize, pageIndex]) => ({
+      type,
+      amount: pageSize,
+      skip: pageIndex * pageSize,
+      query,
+    }))
+  );
+
+  worldObjects$ = this.params$.pipe(
     debounceTime(300),
-    switchMap(([query, pageSize, pageIndex]) =>
-      this.service.getPaged({
-        type: WorldObjectType.Character,
-        amount: pageSize,
-        skip: pageIndex * pageSize,
-        query,
-      })
-    ),
+    filter((params) => params.type !== ('source' as any)),
+    map((params) => ({ ...params, type: params.type as WorldObjectType })),
+    switchMap((params) => this.worldObjectService.getPaged(params)),
     shareReplay(1)
   );
 
-  readonly limit$ = this.data$.pipe(map((data) => data.limit));
+  sources$ = this.params$.pipe(
+    filter((params) => params.type === ('source' as any)),
+    switchMap((params) => this.sourceService.search(params)),
+    shareReplay(1)
+  );
 
-  readonly items$ = this.data$.pipe(map((data) => data.data));
+  hideWorldObjects$ = this.params$.pipe(
+    map((params) => params.type === ('source' as any))
+  );
 
-  constructor(private readonly service: WorldObjectService) {}
+  hideSources$ = this.params$.pipe(
+    map((params) => params.type !== ('source' as any))
+  );
+
+  limit$ = this.params$.pipe(
+    filter((params) => params.type !== ('source' as any)),
+    map((params) => ({ ...params, type: params.type as WorldObjectType })),
+    switchMap((params) => this.worldObjectService.amount(params))
+  );
+
+  constructor(
+    private readonly worldObjectService: WorldObjectService,
+    private readonly sourceService: SourceService
+  ) {}
 
   ngOnInit() {}
 
   async doSearch() {
-    console.log(this.search.value);
     var result = await lastValueFrom(
-      this.service.search(this.search.value ?? '')
+      this.worldObjectService.search(this.search.value ?? '')
     );
   }
 
@@ -78,5 +112,9 @@ export class DashboardComponent implements OnInit {
       skip: event.pageIndex * event.pageSize,
       amount: event.pageSize,
     });
+  }
+
+  itemsForSource(sourceId: number) {
+    return this.worldObjectService.getPaged({ sourceId, amount: 100, skip: 0 });
   }
 }

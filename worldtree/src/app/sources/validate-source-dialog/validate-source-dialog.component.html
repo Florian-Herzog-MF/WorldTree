@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{ data.source.summary }}</h1>
+<div mat-dialog-content>
+  <p>{{ data.source.content }}</p>
+  <strong>Associations:</strong>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let item of data.items">
+      <mat-expansion-panel-header>
+        {{ item.name }} ({{ item.new ? "new" : "existing" }})
+      </mat-expansion-panel-header>
+      {{ item.description }}
+      <mat-list>
+        <mat-list-item *ngFor="let attribute of attributeItems(item)">
+          <strong>{{ attribute.key }}</strong
+          >: {{ attribute.value }}
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<div mat-dialog-actions style="justify-content: flex-end">
+  <button mat-stroked-button (click)="discard()">Discard</button>
+  <button mat-raised-button color="accent" (click)="accept()">Accept</button>
+</div>

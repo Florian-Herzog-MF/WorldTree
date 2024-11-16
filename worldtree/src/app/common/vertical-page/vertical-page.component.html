@@ -1,14 +1,18 @@
 <mat-toolbar>
   <div class="container">
-    <span>
-      <a *ngIf="backButton" mat-icon-button [routerLink]="['..']">
-        <mat-icon>arrow_back</mat-icon>
-      </a>
-    </span>
+    <a *ngIf="backButton; else noButton" mat-icon-button [routerLink]="['..']">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
     <h1>
       {{ header }}
     </h1>
-    <span></span>
+    <a
+      *ngIf="createButton; else noButton"
+      mat-icon-button
+      [routerLink]="['/create']"
+    >
+      <mat-icon>add</mat-icon>
+    </a>
   </div>
 </mat-toolbar>
 <mat-drawer-container [hasBackdrop]="true">
@@ -17,3 +21,6 @@
     <ng-content select="[page]"></ng-content>
   </mat-drawer-content>
 </mat-drawer-container>
+<ng-template #noButton>
+  <a mat-icon-button disabled></a>
+</ng-template>
