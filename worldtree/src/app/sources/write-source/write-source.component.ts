@@ -17,6 +17,8 @@ import { ValidateSourceDialogComponent } from '../validate-source-dialog/validat
 export class WriteSourceComponent {
   text = new FormControl('');
 
+  isLoading = false;
+
   constructor(
     private readonly sourceService: SourceService,
     private readonly worldObjectService: WorldObjectService,
@@ -28,6 +30,7 @@ export class WriteSourceComponent {
       alert('no prompt');
       return;
     }
+    this.isLoading = true;
     const sourceText = this.text.value;
     const amount = 10;
     const existingItems = await this.worldObjectService.search(

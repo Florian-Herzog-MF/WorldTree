@@ -5,11 +5,16 @@
     [formControl]="prompt"
   ></textarea>
 </mat-form-field>
-
+<span
+  *ngIf="isLoading"
+  style="width: 100%; display: flex; justify-content: center"
+>
+  <mat-spinner></mat-spinner>
+</span>
 <button
   mat-raised-button
   color="accent"
-  [disabled]="(prompt.value?.length ?? 0) < 10"
+  [disabled]="isLoading || (prompt.value?.length ?? 0) < 10"
   (click)="generate()"
 >
   <mat-icon>auto_awesome</mat-icon>

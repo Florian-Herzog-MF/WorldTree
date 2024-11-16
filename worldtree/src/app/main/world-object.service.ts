@@ -100,7 +100,7 @@ export class WorldObjectService {
 
   persist(item: WorldObject, sourceId: number) {
     return lastValueFrom(
-      this.http.post<number>(`api/v1/world-object`, { item, sourceId })
+      this.http.post<number>(`api/v1/world-object/persist`, { item, sourceId })
     );
   }
 }

@@ -13,6 +13,8 @@ import { ValidateSourceDialogComponent } from '../validate-source-dialog/validat
 export class GenerateSourceComponent {
   prompt = new FormControl('');
 
+  isLoading = false;
+
   constructor(
     private readonly sourceService: SourceService,
     private readonly worldObjectService: WorldObjectService,
@@ -24,22 +26,20 @@ export class GenerateSourceComponent {
       alert('no prompt');
       return;
     }
+    this.isLoading = true;
     const amount = 10;
     const sourceText = await this.sourceService.generate(
       this.prompt.value,
       amount
     );
-    console.log(sourceText);
     const existingItems = await this.worldObjectService.search(
       sourceText,
       amount
     );
-    console.log(existingItems);
     const newItems = await this.worldObjectService.generate(
       sourceText,
       existingItems
     );
-    console.log(newItems);
 
     this.matDialog.open(ValidateSourceDialogComponent, {
       data: { sourceText, existingItems, newItems },
