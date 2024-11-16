@@ -57,6 +57,6 @@ export class ValidateSourceDialogComponent {
     for (const item of this.data.newItems) {
       await this.worldObjectService.persist(item, sourceId);
     }
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 }

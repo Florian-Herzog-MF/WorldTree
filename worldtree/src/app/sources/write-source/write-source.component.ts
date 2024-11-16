@@ -5,9 +5,9 @@ import {
   WorldObject,
   WorldObjectService,
 } from 'src/app/main/world-object.service';
-import { SourceService } from '../source.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ValidateSourceDialogComponent } from '../validate-source-dialog/validate-source-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-write-source',
@@ -20,9 +20,9 @@ export class WriteSourceComponent {
   isLoading = false;
 
   constructor(
-    private readonly sourceService: SourceService,
     private readonly worldObjectService: WorldObjectService,
-    private readonly matDialog: MatDialog
+    private readonly matDialog: MatDialog,
+    private readonly router: Router
   ) {}
 
   async evaluate() {
@@ -42,8 +42,14 @@ export class WriteSourceComponent {
       existingItems
     );
 
-    this.matDialog.open(ValidateSourceDialogComponent, {
+    const dialogRef = this.matDialog.open(ValidateSourceDialogComponent, {
       data: { sourceText, existingItems, newItems },
     });
+    const success = await lastValueFrom(dialogRef.afterClosed());
+    if (success) {
+      this.router.navigate(['/']);
+    } else {
+      this.isLoading = false;
+    }
   }
 }
