@@ -60,8 +60,11 @@ class WorldManager:
         return json.loads(self._llm_client.generate_response(source, sys_prompt))
     
     def persist_world_object(self, wo: dict, source_id: int) -> int:
-        wo_id = self._world_object_db.add_point(wo["desc"], wo)
-        return self._assoc_db.add_point("-", {"source_id": source_id, "wo_id": wo_id})
+        desc = wo.get("desc")
+        if desc:
+            wo_id = self._world_object_db.add_point(wo["desc"], wo)
+            return self._assoc_db.add_point("-", {"source_id": source_id, "wo_id": wo_id})
+        return -1
 
     def persist_source(self, source: str) -> int:
         return self._source_db.add_point(source, {"ground_truth": source})

@@ -60,7 +60,7 @@ def get_source_by_id(id):
     return jsonify(source)
 
 
-@app.route('/api/v1/source/generate', timeout=10, methods=['POST'])
+@app.route('/api/v1/source/generate', methods=['POST'])
 def generate_source():
     prompt = request.json.get('prompt')
     try:
@@ -75,7 +75,7 @@ def generate_source():
     return jsonify(source)
 
 
-@app.route('/api/v1/world-objects/generate', timeout=10, methods=['POST'])
+@app.route('/api/v1/world-objects/generate', methods=['POST'])
 def generate_world_objects():
     data = request.json
     
@@ -104,12 +104,16 @@ def persist_world_object():
     world_object = request.json.get("world_object")
     if not world_object:
         return jsonify({"error": "Missing 'world_object' in request body"}), 400
+    
+    source_id = request.json.get("source_id")
+    if not source_id:
+        return jsonify({"error": "Missing 'source_id' in request body"}), 400
 
-    result = wm.persist_world_object(world_object)
+    result = wm.persist_world_object(world_object, source_id)
     if not result:
         return jsonify({"error": "Could not persist world object."}), 500
 
-    return jsonify({"message": "World object persisted successfully."})
+    return {"id": result}
 
 
 @app.route('/api/v1/source/persist', methods=['POST'])
@@ -122,7 +126,7 @@ def persist_source():
     if not result:
         return jsonify({"error": "Could not persist source."}), 500
 
-    return jsonify({"message": "Source persisted successfully."})
+    return {"id": result}
 
 
 if __name__ == '__main__':
