@@ -29,14 +29,17 @@ export class GenerateSourceComponent {
       this.prompt.value,
       amount
     );
+    console.log(sourceText);
     const existingItems = await this.worldObjectService.search(
       sourceText,
       amount
     );
+    console.log(existingItems);
     const newItems = await this.worldObjectService.generate(
       sourceText,
       existingItems
     );
+    console.log(newItems);
 
     this.matDialog.open(ValidateSourceDialogComponent, {
       data: { source: sourceText, existingItems, newItems },

@@ -25,7 +25,6 @@ def get_world_objects():
 
     return jsonify(world_objects)
 
-
 @app.route('/api/v1/world-objects/search', methods=['GET'])
 def search_world_objects():
     prompt = request.args.get('prompt')
@@ -82,7 +81,7 @@ def generate_world_objects():
     if not data:
         return jsonify({"error": "Request body must be JSON"}), 400
     
-    source = data.get("source")
+    source = data.get("source_text")
     wo_ids = data.get("wo_ids")
 
     if not source or not isinstance(source, str):
