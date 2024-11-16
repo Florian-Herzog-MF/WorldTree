@@ -57,7 +57,15 @@ class WorldManager:
     def generate_world_objects_from_source(self, source: str, wo_ids: list[int]) -> list[dict]:
         points = self._world_object_db.qdrant_client.retrieve(self._world_object_db.collection_name, wo_ids)
         sys_prompt = WO_DISTILL_SYSTEM_PROMPT.format(context = str(points))
-        return json.loads(self._llm_client.generate_response(source, sys_prompt))
+        try:
+            result = json.loads(self._llm_client.generate_response(source, sys_prompt))
+            if type(result) is dict:
+                return [result]
+            elif type(result) is list:
+                return result
+        except:
+            print("Could not parse.")
+        return []
     
     def persist_world_object(self, wo: dict, source_id: int) -> int:
         desc = wo.get("desc")

@@ -105,7 +105,7 @@ def persist_world_object():
     if not world_object:
         return jsonify({"error": "Missing 'world_object' in request body"}), 400
     
-    source_id = request.json.get("source_ids")[0]
+    source_id = request.json.get("source_id")
     if not source_id:
         return jsonify({"error": "Missing 'source_id' in request body"}), 400
 
