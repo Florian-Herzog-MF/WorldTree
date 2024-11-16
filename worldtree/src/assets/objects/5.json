@@ -2,8 +2,8 @@
   "id": 0,
   "type": "Character",
   "name": "Exathanter",
-  "description": "Ancient Lich",
-  "sourceIds": [2],
+  "desc": "Ancient Lich",
+  "source_ids": [2],
   "attributes": {
     "Nature": "Ancient Lich",
     "Residence": "Amber Temple",
