@@ -43,13 +43,13 @@ export class SourceService {
     );
   }
 
-  public persist(text: string, summary: string) {
+  public persist(text: string, desc: string) {
     return lastValueFrom(
       this.http.post<number>(
         'api/v1/source/persist',
         { text },
         {
-          params: { summary },
+          params: { desc },
         }
       )
     );
