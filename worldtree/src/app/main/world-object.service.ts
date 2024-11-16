@@ -98,9 +98,14 @@ export class WorldObjectService {
     );
   }
 
-  persist(item: WorldObject, sourceId: number) {
+  persist(worldObject: WorldObject, sourceId: number) {
+    const world_object = worldObject;
+    const source_id = sourceId;
     return lastValueFrom(
-      this.http.post<number>(`api/v1/world-object/persist`, { item, sourceId })
+      this.http.post<number>(`api/v1/world-object/persist`, {
+        world_object,
+        source_id,
+      })
     );
   }
 }
