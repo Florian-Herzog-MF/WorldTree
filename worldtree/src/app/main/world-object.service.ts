@@ -81,7 +81,7 @@ export class WorldObjectService {
 
   search(prompt: string, amount: number) {
     return lastValueFrom(
-      this.http.get<WorldObject[]>(`api/v1/world-object/search`, {
+      this.http.get<WorldObject[]>(`api/v1/world-objects/search`, {
         params: { prompt, amount },
       })
     );
