@@ -88,10 +88,11 @@ export class WorldObjectService {
   }
 
   generate(sourceText: string, existingItems: WorldObject[]) {
+    const source = sourceText;
     const wo_ids = existingItems.map((x) => x.id);
     return lastValueFrom(
       this.http.post<WorldObject[]>(`api/v1/world-objects/generate`, {
-        sourceText,
+        source,
         wo_ids,
       })
     );
