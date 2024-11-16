@@ -12,7 +12,7 @@
         <mat-icon>add</mat-icon>
         {{ item.name }} (new)
       </mat-expansion-panel-header>
-      {{ item.description }}
+      {{ item.desc }}
       <mat-list>
         <mat-list-item *ngFor="let attribute of attributeItems(item)">
           <strong>{{ attribute.key }}</strong
@@ -25,7 +25,7 @@
         <mat-icon>link</mat-icon>
         {{ item.name }} (existing)
       </mat-expansion-panel-header>
-      {{ item.description }}
+      {{ item.desc }}
       <mat-list>
         <mat-list-item *ngFor="let attribute of attributeItems(item)">
           <strong>{{ attribute.key }}</strong
