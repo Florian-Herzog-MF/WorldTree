@@ -118,11 +118,15 @@ def persist_world_object():
 
 @app.route('/api/v1/source/persist', methods=['POST'])
 def persist_source():
-    source = request.json.get("source")
+    source = request.json.get("text")
     if not source:
-        return jsonify({"error": "Missing 'source' in request body"}), 400
+        return jsonify({"error": "Missing 'text' in request body"}), 400
+    
+    desc = request.json.get("desc")
+    if not desc:
+        return jsonify({"error": "Missing 'desc' in request body"}), 400
 
-    result = wm.persist_source(source)
+    result = wm.persist_source(source, desc)
     if not result:
         return jsonify({"error": "Could not persist source."}), 500
 

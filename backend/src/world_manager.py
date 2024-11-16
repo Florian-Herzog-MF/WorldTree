@@ -74,5 +74,5 @@ class WorldManager:
             return self._assoc_db.add_point("-", {"source_id": source_id, "wo_id": wo_id})
         return -1
 
-    def persist_source(self, source: str) -> int:
-        return self._source_db.add_point(source, {"ground_truth": source})
+    def persist_source(self, source: str, desc: str) -> int:
+        return self._source_db.add_point(source, {"text": source, "desc": desc})
