@@ -28,16 +28,19 @@ export class WriteSourceComponent {
       alert('no prompt');
       return;
     }
-    const source = this.text.value;
+    const sourceText = this.text.value;
     const amount = 10;
-    const existingItems = await this.worldObjectService.search(source, amount);
+    const existingItems = await this.worldObjectService.search(
+      sourceText,
+      amount
+    );
     const newItems = await this.worldObjectService.generate(
-      source,
+      sourceText,
       existingItems
     );
 
     this.matDialog.open(ValidateSourceDialogComponent, {
-      data: { source, existingItems, newItems },
+      data: { source: sourceText, existingItems, newItems },
     });
   }
 }
