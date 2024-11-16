@@ -3,17 +3,17 @@
 @use "@angular/material" as mat;
 @use "assets/theme/theme" as *;
 
+@include mat.core();
+@include mat.all-component-themes($dark);
+@include mat.typography-hierarchy(mat.define-typography-config());
+
+$config: mat.get-color-config($dark);
+
+@function color($group, $variant) {
+  @return mat.get-color-from-palette(map.get($config, $group), $variant);
+}
+
 app-root {
-  @include mat.core();
-  @include mat.all-component-themes($dark);
-  @include mat.typography-hierarchy(mat.define-typography-config());
-
-  $config: mat.get-color-config($dark);
-
-  @function color($group, $variant) {
-    @return mat.get-color-from-palette(map.get($config, $group), $variant);
-  }
-
   $header-color: color("primary", A100);
 
   app-vertical-page [page] {

@@ -1,6 +1,10 @@
-<h1 mat-dialog-title>{{ data.source.summary }}</h1>
+<h1 mat-dialog-title>Validate New Source</h1>
 <div mat-dialog-content>
-  <p>{{ data.source.content }}</p>
+  <mat-form-field>
+    <input matInput required [formControl]="summary" />
+    <mat-hint>A short sentence that describes this source</mat-hint>
+  </mat-form-field>
+  <p>{{ data.sourceText }}</p>
   <strong>Associations:</strong>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let item of data.newItems">
@@ -33,5 +37,12 @@
 </div>
 <div mat-dialog-actions style="justify-content: flex-end">
   <button mat-stroked-button (click)="discard()">Discard</button>
-  <button mat-raised-button color="accent" (click)="accept()">Accept</button>
+  <button
+    mat-raised-button
+    color="accent"
+    [disabled]="summary.invalid"
+    (click)="accept()"
+  >
+    Accept
+  </button>
 </div>

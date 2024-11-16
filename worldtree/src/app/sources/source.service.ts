@@ -44,4 +44,12 @@ export class SourceService {
       this.http.post<string>('api/v1/source/generate', { prompt, amount })
     );
   }
+
+  public persist(source: string, summary: string) {
+    return lastValueFrom(
+      this.http.post<number>('api/v1/source/persist', source, {
+        params: { summary },
+      })
+    );
+  }
 }
