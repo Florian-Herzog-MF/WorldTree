@@ -6,6 +6,8 @@ import {
   WorldObjectService,
 } from 'src/app/main/world-object.service';
 import { SourceService } from '../source.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ValidateSourceDialogComponent } from '../validate-source-dialog/validate-source-dialog.component';
 
 @Component({
   selector: 'app-write-source',
@@ -17,8 +19,25 @@ export class WriteSourceComponent {
 
   constructor(
     private readonly sourceService: SourceService,
-    private readonly worldObjectService: WorldObjectService
+    private readonly worldObjectService: WorldObjectService,
+    private readonly matDialog: MatDialog
   ) {}
 
-  async evaluate() {}
+  async evaluate() {
+    if (!this.text.value) {
+      alert('no prompt');
+      return;
+    }
+    const source = this.text.value;
+    const amount = 10;
+    const existingItems = await this.worldObjectService.search(source, amount);
+    const newItems = await this.worldObjectService.generate(
+      source,
+      existingItems
+    );
+
+    this.matDialog.open(ValidateSourceDialogComponent, {
+      data: { source, existingItems, newItems },
+    });
+  }
 }

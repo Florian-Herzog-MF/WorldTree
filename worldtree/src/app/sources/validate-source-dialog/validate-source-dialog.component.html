@@ -3,9 +3,23 @@
   <p>{{ data.source.content }}</p>
   <strong>Associations:</strong>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let item of data.items">
+    <mat-expansion-panel *ngFor="let item of data.newItems">
       <mat-expansion-panel-header>
-        {{ item.name }} ({{ item.new ? "new" : "existing" }})
+        <mat-icon>add</mat-icon>
+        {{ item.name }} (new)
+      </mat-expansion-panel-header>
+      {{ item.description }}
+      <mat-list>
+        <mat-list-item *ngFor="let attribute of attributeItems(item)">
+          <strong>{{ attribute.key }}</strong
+          >: {{ attribute.value }}
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngFor="let item of data.existingItems">
+      <mat-expansion-panel-header>
+        <mat-icon>link</mat-icon>
+        {{ item.name }} (existing)
       </mat-expansion-panel-header>
       {{ item.description }}
       <mat-list>

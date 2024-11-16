@@ -38,4 +38,10 @@ export class SourceService {
       )
     );
   }
+
+  public generate(prompt: string, amount: number) {
+    return lastValueFrom(
+      this.http.post<string>('api/v1/source/generate', { prompt, amount })
+    );
+  }
 }

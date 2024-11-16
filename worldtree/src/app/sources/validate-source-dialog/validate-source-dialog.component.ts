@@ -13,7 +13,8 @@ export class ValidateSourceDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public readonly data: {
       source: Source;
-      items: (WorldObject & { new: boolean })[];
+      newItems: WorldObject[];
+      existingItems: WorldObject[];
     },
     public readonly dialogRef: MatDialogRef<ValidateSourceDialogComponent>,
     private readonly sourceService: SourceService
