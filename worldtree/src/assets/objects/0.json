@@ -2,7 +2,7 @@
   "id": 0,
   "type": "Character",
   "name": "",
-  "description": "",
-  "sourceIds": [],
+  "desc": "",
+  "source_ids": [],
   "attributes": {}
 }

@@ -2,8 +2,8 @@
   "id": 7,
   "type": "Town",
   "name": "Vallaki",
-  "description": "Medium-sized town in Barovia",
-  "sourceIds": [6],
+  "desc": "Medium-sized town in Barovia",
+  "source_ids": [6],
   "attributes": {
     "Population": "2000",
     "Ruler": "Burgomaster Vargas Vallakovich",

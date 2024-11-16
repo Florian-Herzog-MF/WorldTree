@@ -9,7 +9,7 @@
   <mat-accordion>
     <mat-expansion-panel *ngFor="let item of data.newItems">
       <mat-expansion-panel-header>
-        <mat-icon>add</mat-icon>
+        <mat-icon style="margin-right: 16px">add</mat-icon>
         {{ item.name }} (new)
       </mat-expansion-panel-header>
       {{ item.desc }}
@@ -22,7 +22,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel *ngFor="let item of data.existingItems">
       <mat-expansion-panel-header>
-        <mat-icon>link</mat-icon>
+        <mat-icon style="margin-right: 16px">link</mat-icon>
         {{ item.name }} (existing)
       </mat-expansion-panel-header>
       {{ item.desc }}

@@ -2,8 +2,8 @@
   "id": 4,
   "type": "Character",
   "name": "Strahd von Zarovich",
-  "description": "Vampire Lord",
-  "sourceIds": [1, 3],
+  "desc": "Vampire Lord",
+  "source_ids": [1, 3],
   "attributes": {
     "Nature": "Ancient Vampire Lord",
     "Residence": "Castle Ravenloft",
